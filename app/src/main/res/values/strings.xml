@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YouTube Auto</string>
+    <string name="app_name">Youtube segundo auto en segundo plano</string>
     <string name="app_name_short">YT Auto</string>
     
     <!-- Notificaciones -->
@@ -16,7 +16,7 @@
     <string name="action_stop">Detener</string>
     
     <!-- Android Auto -->
-    <string name="car_app_name">YouTube Auto</string>
+    <string name="car_app_name">Youtube segundo auto en segundo plano</string>
     <string name="car_menu_title">Menú YouTube</string>
     <string name="car_search_hint">Buscar videos...</string>
     
