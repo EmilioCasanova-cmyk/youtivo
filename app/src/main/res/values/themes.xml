@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema principal de la aplicación -->
+    <style name="Theme.YouTubeAuto" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+
+    <!-- Definición mínima para compatibilidad con Android Auto if missing -->
+    <style name="Theme.CarAppTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Valores por defecto para evitar errores de enlace de recursos -->
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+
+    <!-- Tema para Android Auto -->
+    <style name="Theme.YouTubeAuto.Car" parent="Theme.CarAppTheme">
+        <item name="carColorPrimary">@color/car_primary</item>
+        <item name="carColorPrimaryDark">@color/primary_dark</item>
+        <item name="carColorSecondary">@color/accent</item>
+        <item name="android:windowBackground">@color/car_background</item>
+    </style>
+
+    <!-- Tema para notificaciones -->
+    <style name="Theme.YouTubeAuto.Notification" parent="Theme.Material3.Dark">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+</resources>

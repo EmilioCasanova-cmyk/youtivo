@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores principales de YouTube -->
+    <color name="youtube_red">#FF0000</color>
+    <color name="youtube_dark_red">#CC0000</color>
+    <color name="youtube_black">#282828</color>
+    <color name="youtube_white">#FFFFFF</color>
+    <color name="youtube_gray">#606060</color>
+    <color name="youtube_light_gray">#909090</color>
+    
+    <!-- Colores de la app -->
+    <color name="primary">#FF0000</color>
+    <color name="primary_dark">#CC0000</color>
+    <color name="accent">#FF0000</color>
+    <color name="background">#000000</color>
+    <color name="surface">#121212</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3B3B3</color>
+    
+    <!-- Colores para Android Auto -->
+    <color name="car_primary">#FF0000</color>
+    <color name="car_background">#000000</color>
+    <color name="car_surface">#1A1A1A</color>
+</resources>

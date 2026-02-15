@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">YouTube Auto</string>
+    <string name="app_name_short">YT Auto</string>
+    
+    <!-- Notificaciones -->
+    <string name="notification_playback_title">YouTube Auto</string>
+    <string name="notification_playback_text">Reproducción en segundo plano</string>
+    <string name="notification_playback_channel">Reproducción en segundo plano</string>
+    <string name="notification_media_channel">Controles de medios</string>
+    
+    <!-- Controles -->
+    <string name="action_play">Reproducir</string>
+    <string name="action_pause">Pausar</string>
+    <string name="action_next">Siguiente</string>
+    <string name="action_previous">Anterior</string>
+    <string name="action_stop">Detener</string>
+    
+    <!-- Android Auto -->
+    <string name="car_app_name">YouTube Auto</string>
+    <string name="car_menu_title">Menú YouTube</string>
+    <string name="car_search_hint">Buscar videos...</string>
+    
+    <!-- Mensajes -->
+    <string name="msg_loading">Cargando...</string>
+    <string name="msg_error">Error al cargar</string>
+    <string name="msg_background_active">Reproducción en segundo plano activa</string>
+</resources>
