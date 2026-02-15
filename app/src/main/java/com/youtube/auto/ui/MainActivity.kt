@@ -307,8 +307,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        // No pausar WebView para mantener reproducción
-        webView.onPause()
+        // No pausar WebView para mantener reproducción en segundo plano
+        // Evitamos llamar a `webView.onPause()` que puede detener la reproducción
         webView.resumeTimers()
     }
 
@@ -326,6 +326,20 @@ class MainActivity : AppCompatActivity() {
         }
         wakeLock?.release()
         webView.destroy()
+    }
+
+    private fun ensureBatteryOptimizationDisabled() {
+        try {
+            val pm = getSystemService(POWER_SERVICE) as android.os.PowerManager
+            val packageName = packageName
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !pm.isIgnoringBatteryOptimizations(packageName)) {
+                val intent = android.content.Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                intent.data = android.net.Uri.parse("package:$packageName")
+                startActivity(intent)
+            }
+        } catch (e: Exception) {
+            // No hacer nada si falla; se puede instruir al usuario manualmente
+        }
     }
 
     // Interfaz JavaScript

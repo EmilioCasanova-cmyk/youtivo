@@ -95,7 +95,10 @@
             android:permission="androidx.car.app.ACCESS_SURFACE">
             <intent-filter>
                 <action android:name="androidx.car.app.CarAppService" />
+                <!-- Support both NAVIGATION and MEDIA categories so the app appears
+                     in Android Auto as a media app as well as navigation (if needed) -->
                 <category android:name="androidx.car.app.category.NAVIGATION" />
+                <category android:name="androidx.car.app.category.MEDIA" />
             </intent-filter>
             <meta-data
                 android:name="androidx.car.app.THEME"
