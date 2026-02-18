@@ -1,0 +1,7 @@
+*.log
+*.txt
+.gradle
+build/
+local.properties
+.idea/
+.vscode/
