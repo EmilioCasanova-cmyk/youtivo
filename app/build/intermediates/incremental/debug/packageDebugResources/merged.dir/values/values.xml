@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="primary">#FF0000</color>
+    <color name="primary_dark">#CC0000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="action_back">Atrás</string>
+    <string name="action_forward">Adelante</string>
+    <string name="action_home">Inicio</string>
+    <string name="action_reload">Recargar</string>
+    <string name="app_name">YouTube Browser</string>
+    <string name="park_to_watch">Estaciona para ver video</string>
+    <string name="safety_disclaimer">Esta aplicación permite acceder a contenido web durante la conducción únicamente cuando el vehículo está completamente detenido.</string>
+    <string name="video_blocked_message">Video bloqueado por seguridad.\nEl vehículo está en movimiento.</string>
+    <style name="Theme.CarApp" parent="android:Theme.Material.Light.NoActionBar"/>
+    <style name="Theme.YouTubeAndroidAuto" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

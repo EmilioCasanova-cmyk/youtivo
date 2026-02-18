@@ -1,0 +1,27 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color primary
+color primary_dark
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id btnBack
+id btnForward
+id btnHome
+id btnReload
+id toolbar
+id webView
+layout activity_main_browser
+mipmap ic_launcher
+mipmap ic_launcher_round
+string action_back
+string action_forward
+string action_home
+string action_reload
+string app_name
+string park_to_watch
+string safety_disclaimer
+string video_blocked_message
+style Theme.CarApp
+style Theme.YouTubeAndroidAuto

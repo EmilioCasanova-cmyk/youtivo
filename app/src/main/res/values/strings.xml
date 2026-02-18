@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YouTube Browser</string>
+    <string name="video_blocked_message">Video bloqueado por seguridad.\nEl vehículo está en movimiento.</string>
+    <string name="park_to_watch">Estaciona para ver video</string>
+    <string name="action_home">Inicio</string>
+    <string name="action_back">Atrás</string>
+    <string name="action_forward">Adelante</string>
+    <string name="action_reload">Recargar</string>
+    <string name="safety_disclaimer">Esta aplicación permite acceder a contenido web durante la conducción únicamente cuando el vehículo está completamente detenido.</string>
+</resources>
