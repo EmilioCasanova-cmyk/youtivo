@@ -4,7 +4,7 @@ Aplicación Android Auto que integra un navegador web para acceder a YouTube con
 
 ## Descarga
 
-[Descargar APK](https://github.com/EmilioCasanova-cmyk/youtivo/releases/download/v1.0/app-debug.apk)
+[Descargar APK](https://github.com/EmilioCasanova-cmyk/youtivo/raw/main/release/youtivo-debug.apk)
 
 
 ## Requisitos
