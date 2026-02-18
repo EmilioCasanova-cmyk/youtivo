@@ -2,6 +2,11 @@
 
 Aplicación Android Auto que integra un navegador web para acceder a YouTube con bloqueo automático de video cuando el vehículo está en movimiento.
 
+## Descarga
+
+[Descargar APK](https://github.com/EmilioCasanova-cmyk/youtivo/releases/download/v1.0/app-debug.apk)
+
+
 ## Requisitos
 
 - Android Studio Ladybug (2024.2.1) o superior
