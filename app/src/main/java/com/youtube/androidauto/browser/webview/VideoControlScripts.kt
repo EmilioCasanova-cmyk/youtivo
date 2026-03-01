@@ -28,4 +28,31 @@ object VideoControlScripts {
             window.vehicleIsMoving = false;
         })();
     """
+
+    /** Pausa simple de todos los elementos video. */
+    const val PAUSE_SIMPLE = "document.querySelectorAll('video').forEach(v => v.pause());"
+
+    /** Parche para forzar la reproducción automática cuando se navega. */
+    const val AUTO_PLAY_PATCH = """
+        (function() {
+            setInterval(() => {
+                const playButton = document.querySelector('.ytp-play-button[aria-label="Reproducir"]');
+                if (playButton && !window.vehicleIsMoving) {
+                    playButton.click();
+                }
+            }, 2000);
+        })();
+    """
+
+    /** Oculta elementos visuales molestos o anuncios conocidos. */
+    const val CSS_AD_BLOCK = """
+        (function() {
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .ad-container, .ad-div, .video-ads, .ytp-ad-progress-list { display: none !important; }
+                #masthead-ad, ytd-ad-slot-renderer { display: none !important; }
+            `;
+            document.head.appendChild(style);
+        })();
+    """
 }

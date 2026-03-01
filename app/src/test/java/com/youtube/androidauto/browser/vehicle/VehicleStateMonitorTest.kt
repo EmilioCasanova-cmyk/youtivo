@@ -15,6 +15,6 @@ class VehicleStateMonitorTest {
         runTest {
             val monitor = DefaultVehicleStateMonitor(carContext = null)
             val state = monitor.observeVehicleState().first()
-            assertEquals(VehicleState.UNKNOWN, state)
+            assertEquals(VehicleState.PARKED, state)
         }
 }

@@ -71,6 +71,11 @@ class WebViewManager(
             ) {
                 super.onPageFinished(view, url)
                 Timber.d("Page finished: %s", url)
+                
+                // Inyectar optimizaciones de UI y reproducción
+                evaluateJavascript(VideoControlScripts.AUTO_PLAY_PATCH, null)
+                evaluateJavascript(VideoControlScripts.CSS_AD_BLOCK, null)
+                
                 onPageLoaded?.invoke()
             }
 
@@ -113,10 +118,7 @@ class WebViewManager(
 
     /** Pausa todos los elementos video de la página. */
     fun pauseAllVideos() {
-        evaluateJavascript(
-            "document.querySelectorAll('video').forEach(v => v.pause());",
-            null,
-        )
+        evaluateJavascript(VideoControlScripts.PAUSE_SIMPLE, null)
     }
 
     /** Notifica que el audio ha comenzado a reproducirse (para Audio Focus). */
