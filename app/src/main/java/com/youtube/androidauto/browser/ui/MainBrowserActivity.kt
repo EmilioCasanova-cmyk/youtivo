@@ -1,6 +1,9 @@
 package com.youtube.androidauto.browser.ui
 
+import android.media.AudioManager
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -30,12 +33,16 @@ class MainBrowserActivity : AppCompatActivity() {
     private lateinit var navigationController: NavigationController
     private lateinit var cookieManager: SessionCookieManager
     private lateinit var safetyController: SafetyController
+    private lateinit var loadingProgress: ProgressBar
+    private lateinit var audioManager: AudioManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_browser)
 
         webView = findViewById(R.id.webView)
+        loadingProgress = findViewById(R.id.loadingProgress)
+        audioManager = getSystemService(android.content.Context.AUDIO_SERVICE) as AudioManager
         cookieManager = SessionCookieManager(webView)
 
         navigationController = NavigationController(webView)
@@ -48,10 +55,26 @@ class MainBrowserActivity : AppCompatActivity() {
 
         setupToolbar()
         setupWebViewErrors()
+        setupWebViewLoadingListener()
         safetyController.startMonitoring()
 
         if (savedInstanceState == null) {
             webView.loadYouTube()
+        }
+    }
+
+    private fun setupWebViewLoadingListener() {
+        // Mostrar progreso al iniciar carga
+        loadingProgress.visibility = View.VISIBLE
+        webView.webViewClient = object : android.webkit.WebViewClient() {
+            override fun onPageFinished(
+                view: android.webkit.WebView?,
+                url: String?,
+            ) {
+                super.onPageFinished(view, url)
+                // Ocultar progreso cuando la página termine de cargar
+                loadingProgress.visibility = View.GONE
+            }
         }
     }
 
@@ -81,8 +104,25 @@ class MainBrowserActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Solicitar Audio Focus para reproducción de media
+        val audioFocusRequest = android.media.AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+            .setAudioAttributes(
+                android.media.AudioAttributes.Builder()
+                    .setUsage(android.media.AudioAttributes.USAGE_MEDIA)
+                    .setContentType(android.media.AudioAttributes.CONTENT_TYPE_SPEECH)
+                    .build()
+            )
+            .setAcceptsDelayedFocusGain(true)
+            .build()
+        audioManager.requestAudioFocus(audioFocusRequest)
+    }
+
     override fun onPause() {
         super.onPause()
+        // Liberar Audio Focus al pausar la actividad
+        audioManager.abandonAudioFocus(null)
         cookieManager.saveCookies()
     }
 }

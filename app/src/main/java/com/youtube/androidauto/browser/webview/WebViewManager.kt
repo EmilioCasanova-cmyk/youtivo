@@ -3,6 +3,7 @@ package com.youtube.androidauto.browser.webview
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.media.AudioManager
 import android.util.AttributeSet
 import android.webkit.CookieManager
 import android.webkit.WebChromeClient
@@ -27,6 +28,8 @@ class WebViewManager(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : WebView(context, attrs, defStyleAttr) {
+    private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
     init {
         setupSettings()
         webViewClient = createWebViewClient()
@@ -112,6 +115,17 @@ class WebViewManager(
             "document.querySelectorAll('video').forEach(v => v.pause());",
             null,
         )
+    }
+
+    /** Notifica que el audio ha comenzado a reproducirse (para Audio Focus). */
+    fun notifyAudioStarted() {
+        audioManager.playSoundEffect(AudioManager.FX_FOCUS_NAVIGATION_UP, 0f)
+        Timber.d("Audio reproduction started - notified AudioManager")
+    }
+
+    /** Notifica que el audio ha pausado (libera Audio Focus). */
+    fun notifyAudioStopped() {
+        Timber.d("Audio reproduction stopped")
     }
 
     companion object {
