@@ -61,6 +61,7 @@ class WebViewManager(
     }
 
     var onPageError: ((errorCode: Int, description: String?) -> Unit)? = null
+    var onPageLoaded: (() -> Unit)? = null
 
     private fun createWebViewClient(): WebViewClient =
         object : WebViewClient() {
@@ -70,6 +71,7 @@ class WebViewManager(
             ) {
                 super.onPageFinished(view, url)
                 Timber.d("Page finished: %s", url)
+                onPageLoaded?.invoke()
             }
 
             override fun onReceivedError(

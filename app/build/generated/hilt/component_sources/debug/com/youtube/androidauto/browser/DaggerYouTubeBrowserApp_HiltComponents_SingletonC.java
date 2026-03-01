@@ -505,7 +505,7 @@ public final class DaggerYouTubeBrowserApp_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectYouTubeBrowserApp(YouTubeBrowserApp arg0) {
+    public void injectYouTubeBrowserApp(YouTubeBrowserApp youTubeBrowserApp) {
     }
 
     @Override

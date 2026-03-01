@@ -1,5 +1,7 @@
 package com.youtube.androidauto.browser.ui
 
+import android.media.AudioFocusRequest
+import android.media.AudioAttributes
 import android.media.AudioManager
 import android.os.Bundle
 import android.view.View
@@ -35,6 +37,7 @@ class MainBrowserActivity : AppCompatActivity() {
     private lateinit var safetyController: SafetyController
     private lateinit var loadingProgress: ProgressBar
     private lateinit var audioManager: AudioManager
+    private lateinit var audioFocusRequest: AudioFocusRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,24 +62,17 @@ class MainBrowserActivity : AppCompatActivity() {
         safetyController.startMonitoring()
 
         if (savedInstanceState == null) {
+            loadingProgress.visibility = View.VISIBLE
             webView.loadYouTube()
         }
     }
 
     private fun setupWebViewLoadingListener() {
-        // Mostrar progreso al iniciar carga
-        loadingProgress.visibility = View.VISIBLE
-        webView.webViewClient = object : android.webkit.WebViewClient() {
-            override fun onPageFinished(
-                view: android.webkit.WebView?,
-                url: String?,
-            ) {
-                super.onPageFinished(view, url)
-                // Ocultar progreso cuando la página termine de cargar
-                loadingProgress.visibility = View.GONE
-            }
+        webView.onPageLoaded = {
+            loadingProgress.visibility = View.GONE
         }
     }
+
 
     private fun setupToolbar() {
         findViewById<android.widget.ImageButton>(R.id.btnBack).setOnClickListener {
@@ -107,11 +103,11 @@ class MainBrowserActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // Solicitar Audio Focus para reproducción de media
-        val audioFocusRequest = android.media.AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+        audioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
             .setAudioAttributes(
-                android.media.AudioAttributes.Builder()
-                    .setUsage(android.media.AudioAttributes.USAGE_MEDIA)
-                    .setContentType(android.media.AudioAttributes.CONTENT_TYPE_SPEECH)
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                     .build()
             )
             .setAcceptsDelayedFocusGain(true)
@@ -122,7 +118,9 @@ class MainBrowserActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         // Liberar Audio Focus al pausar la actividad
-        audioManager.abandonAudioFocus(null)
+        if (::audioFocusRequest.isInitialized) {
+            audioManager.abandonAudioFocusRequest(audioFocusRequest)
+        }
         cookieManager.saveCookies()
     }
 }

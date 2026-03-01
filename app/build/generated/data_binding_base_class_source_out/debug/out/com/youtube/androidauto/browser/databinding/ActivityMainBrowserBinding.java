@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
@@ -34,6 +35,9 @@ public final class ActivityMainBrowserBinding implements ViewBinding {
   public final ImageButton btnReload;
 
   @NonNull
+  public final ProgressBar loadingProgress;
+
+  @NonNull
   public final LinearLayout toolbar;
 
   @NonNull
@@ -41,12 +45,14 @@ public final class ActivityMainBrowserBinding implements ViewBinding {
 
   private ActivityMainBrowserBinding(@NonNull FrameLayout rootView, @NonNull ImageButton btnBack,
       @NonNull ImageButton btnForward, @NonNull ImageButton btnHome, @NonNull ImageButton btnReload,
-      @NonNull LinearLayout toolbar, @NonNull WebViewManager webView) {
+      @NonNull ProgressBar loadingProgress, @NonNull LinearLayout toolbar,
+      @NonNull WebViewManager webView) {
     this.rootView = rootView;
     this.btnBack = btnBack;
     this.btnForward = btnForward;
     this.btnHome = btnHome;
     this.btnReload = btnReload;
+    this.loadingProgress = loadingProgress;
     this.toolbar = toolbar;
     this.webView = webView;
   }
@@ -102,6 +108,12 @@ public final class ActivityMainBrowserBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.loadingProgress;
+      ProgressBar loadingProgress = ViewBindings.findChildViewById(rootView, id);
+      if (loadingProgress == null) {
+        break missingId;
+      }
+
       id = R.id.toolbar;
       LinearLayout toolbar = ViewBindings.findChildViewById(rootView, id);
       if (toolbar == null) {
@@ -115,7 +127,7 @@ public final class ActivityMainBrowserBinding implements ViewBinding {
       }
 
       return new ActivityMainBrowserBinding((FrameLayout) rootView, btnBack, btnForward, btnHome,
-          btnReload, toolbar, webView);
+          btnReload, loadingProgress, toolbar, webView);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

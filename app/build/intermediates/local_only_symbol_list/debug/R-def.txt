@@ -10,6 +10,7 @@ id btnBack
 id btnForward
 id btnHome
 id btnReload
+id loadingProgress
 id toolbar
 id webView
 layout activity_main_browser

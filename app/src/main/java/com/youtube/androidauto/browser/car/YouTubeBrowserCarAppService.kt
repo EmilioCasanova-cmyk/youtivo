@@ -9,7 +9,7 @@ import androidx.car.app.validation.HostValidator
  * y crea la sesión que muestra la pantalla del navegador (plantillas).
  */
 class YouTubeBrowserCarAppService : CarAppService() {
-    override fun createHostValidator(): HostValidator = HostValidator.Builder(applicationContext).build()
+    override fun createHostValidator(): HostValidator = HostValidator.ALLOW_ALL_HOSTS_VALIDATOR
 
     override fun onCreateSession(): Session = YouTubeBrowserSession()
 }
