@@ -18,7 +18,8 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast"
 })
 public final class MainBrowserActivity_MembersInjector implements MembersInjector<MainBrowserActivity> {
   private final Provider<VehicleStateMonitor> vehicleStateMonitorProvider;

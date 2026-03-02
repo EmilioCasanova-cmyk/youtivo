@@ -1,5 +1,12 @@
 package com.youtube.androidauto.browser.car;
 
+import androidx.car.app.Screen;
+import androidx.car.app.model.Action;
+import androidx.car.app.model.ActionStrip;
+import androidx.car.app.model.MessageTemplate;
+import androidx.car.app.model.Template;
+import com.youtube.androidauto.browser.R;
+
 /**
  * Pantalla de Android Auto que muestra plantillas (templates).
  * Muestra mensaje de seguridad y acciones de navegación.

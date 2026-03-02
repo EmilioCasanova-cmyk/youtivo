@@ -1,5 +1,9 @@
 package com.youtube.androidauto.browser.storage;
 
+import android.webkit.CookieManager;
+import android.webkit.WebView;
+import timber.log.Timber;
+
 /**
  * Gestión de cookies para persistir sesión de YouTube entre reinicios.
  */

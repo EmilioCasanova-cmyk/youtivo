@@ -1,5 +1,13 @@
 package com.youtube.androidauto.browser.webview;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import com.youtube.androidauto.browser.R;
+
 /**
  * Overlay que cubre el WebView cuando el vehículo está en movimiento.
  * Muestra mensaje de seguridad y evita que el usuario vea el video.

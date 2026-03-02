@@ -9,13 +9,11 @@ import androidx.lifecycle.ViewModel;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import com.youtube.androidauto.browser.di.AppModule;
 import com.youtube.androidauto.browser.di.AppModule_ProvideVehicleStateMonitorFactory;
 import com.youtube.androidauto.browser.ui.MainBrowserActivity;
 import com.youtube.androidauto.browser.ui.MainBrowserActivity_MembersInjector;
 import dagger.hilt.android.ActivityRetainedLifecycle;
 import dagger.hilt.android.ViewModelLifecycle;
-import dagger.hilt.android.flags.HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule;
 import dagger.hilt.android.internal.builders.ActivityComponentBuilder;
 import dagger.hilt.android.internal.builders.ActivityRetainedComponentBuilder;
 import dagger.hilt.android.internal.builders.FragmentComponentBuilder;
@@ -26,6 +24,7 @@ import dagger.hilt.android.internal.builders.ViewWithFragmentComponentBuilder;
 import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories;
 import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories_InternalFactoryFactory_Factory;
 import dagger.hilt.android.internal.managers.ActivityRetainedComponentManager_LifecycleModule_ProvideActivityRetainedLifecycleFactory;
+import dagger.hilt.android.internal.managers.SavedStateHandleHolder;
 import dagger.hilt.android.internal.modules.ApplicationContextModule;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
@@ -44,7 +43,8 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast"
 })
 public final class DaggerYouTubeBrowserApp_HiltComponents_SingletonC {
   private DaggerYouTubeBrowserApp_HiltComponents_SingletonC() {
@@ -66,27 +66,8 @@ public final class DaggerYouTubeBrowserApp_HiltComponents_SingletonC {
      * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
      */
     @Deprecated
-    public Builder appModule(AppModule appModule) {
-      Preconditions.checkNotNull(appModule);
-      return this;
-    }
-
-    /**
-     * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
-     */
-    @Deprecated
     public Builder applicationContextModule(ApplicationContextModule applicationContextModule) {
       Preconditions.checkNotNull(applicationContextModule);
-      return this;
-    }
-
-    /**
-     * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
-     */
-    @Deprecated
-    public Builder hiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule(
-        HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule hiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule) {
-      Preconditions.checkNotNull(hiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule);
       return this;
     }
 
@@ -98,13 +79,23 @@ public final class DaggerYouTubeBrowserApp_HiltComponents_SingletonC {
   private static final class ActivityRetainedCBuilder implements YouTubeBrowserApp_HiltComponents.ActivityRetainedC.Builder {
     private final SingletonCImpl singletonCImpl;
 
+    private SavedStateHandleHolder savedStateHandleHolder;
+
     private ActivityRetainedCBuilder(SingletonCImpl singletonCImpl) {
       this.singletonCImpl = singletonCImpl;
     }
 
     @Override
+    public ActivityRetainedCBuilder savedStateHandleHolder(
+        SavedStateHandleHolder savedStateHandleHolder) {
+      this.savedStateHandleHolder = Preconditions.checkNotNull(savedStateHandleHolder);
+      return this;
+    }
+
+    @Override
     public YouTubeBrowserApp_HiltComponents.ActivityRetainedC build() {
-      return new ActivityRetainedCImpl(singletonCImpl);
+      Preconditions.checkBuilderRequirement(savedStateHandleHolder, SavedStateHandleHolder.class);
+      return new ActivityRetainedCImpl(singletonCImpl, savedStateHandleHolder);
     }
   }
 
@@ -376,12 +367,12 @@ public final class DaggerYouTubeBrowserApp_HiltComponents_SingletonC {
 
     @Override
     public DefaultViewModelFactories.InternalFactoryFactory getHiltInternalFactoryFactory() {
-      return DefaultViewModelFactories_InternalFactoryFactory_Factory.newInstance(ImmutableSet.<String>of(), new ViewModelCBuilder(singletonCImpl, activityRetainedCImpl));
+      return DefaultViewModelFactories_InternalFactoryFactory_Factory.newInstance(ImmutableMap.<Class<?>, Boolean>of(), new ViewModelCBuilder(singletonCImpl, activityRetainedCImpl));
     }
 
     @Override
-    public Set<String> getViewModelKeys() {
-      return ImmutableSet.<String>of();
+    public Map<Class<?>, Boolean> getViewModelKeys() {
+      return ImmutableMap.<Class<?>, Boolean>of();
     }
 
     @Override
@@ -423,8 +414,13 @@ public final class DaggerYouTubeBrowserApp_HiltComponents_SingletonC {
     }
 
     @Override
-    public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return ImmutableMap.<String, Provider<ViewModel>>of();
+    public Map<Class<?>, Provider<ViewModel>> getHiltViewModelMap() {
+      return ImmutableMap.<Class<?>, Provider<ViewModel>>of();
+    }
+
+    @Override
+    public Map<Class<?>, Object> getHiltViewModelAssistedMap() {
+      return ImmutableMap.<Class<?>, Object>of();
     }
   }
 
@@ -433,17 +429,18 @@ public final class DaggerYouTubeBrowserApp_HiltComponents_SingletonC {
 
     private final ActivityRetainedCImpl activityRetainedCImpl = this;
 
-    private Provider<ActivityRetainedLifecycle> provideActivityRetainedLifecycleProvider;
+    private dagger.internal.Provider<ActivityRetainedLifecycle> provideActivityRetainedLifecycleProvider;
 
-    private ActivityRetainedCImpl(SingletonCImpl singletonCImpl) {
+    private ActivityRetainedCImpl(SingletonCImpl singletonCImpl,
+        SavedStateHandleHolder savedStateHandleHolderParam) {
       this.singletonCImpl = singletonCImpl;
 
-      initialize();
+      initialize(savedStateHandleHolderParam);
 
     }
 
     @SuppressWarnings("unchecked")
-    private void initialize() {
+    private void initialize(final SavedStateHandleHolder savedStateHandleHolderParam) {
       this.provideActivityRetainedLifecycleProvider = DoubleCheck.provider(new SwitchingProvider<ActivityRetainedLifecycle>(singletonCImpl, activityRetainedCImpl, 0));
     }
 
@@ -457,7 +454,7 @@ public final class DaggerYouTubeBrowserApp_HiltComponents_SingletonC {
       return provideActivityRetainedLifecycleProvider.get();
     }
 
-    private static final class SwitchingProvider<T> implements Provider<T> {
+    private static final class SwitchingProvider<T> implements dagger.internal.Provider<T> {
       private final SingletonCImpl singletonCImpl;
 
       private final ActivityRetainedCImpl activityRetainedCImpl;

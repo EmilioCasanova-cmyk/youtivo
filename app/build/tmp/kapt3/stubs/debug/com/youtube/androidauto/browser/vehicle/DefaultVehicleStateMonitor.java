@@ -1,5 +1,7 @@
 package com.youtube.androidauto.browser.vehicle;
 
+import kotlinx.coroutines.flow.Flow;
+
 /**
  * Implementación que emite estado cada 500 ms.
  * En entorno sin CarContext usa UNKNOWN (conservador).

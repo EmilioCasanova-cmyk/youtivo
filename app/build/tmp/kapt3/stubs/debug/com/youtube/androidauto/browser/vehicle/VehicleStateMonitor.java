@@ -1,5 +1,7 @@
 package com.youtube.androidauto.browser.vehicle;
 
+import kotlinx.coroutines.flow.Flow;
+
 /**
  * Monitor del estado del vehículo (PARKED / MOVING).
  * Cuando no hay contexto de coche (ej. app en teléfono), devuelve UNKNOWN

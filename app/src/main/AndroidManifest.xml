@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.youtube.androidauto.browser">
 
     <!-- Android Auto -->
     <uses-feature
@@ -24,6 +25,10 @@
         android:usesCleartextTraffic="false"
         android:hardwareAccelerated="true">
 
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+
         <!-- Main Activity with WebView (phone + Android Automotive OS) -->
         <activity
             android:name=".ui.MainBrowserActivity"
@@ -44,12 +49,16 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="androidx.car.app.CarAppService" />
-                <category android:name="androidx.car.app.category.PLACEHOLDER" />
+                <category android:name="androidx.car.app.category.NAVIGATION" />
             </intent-filter>
 
             <meta-data
                 android:name="androidx.car.app.theme"
                 android:resource="@style/Theme.CarApp" />
+
+            <meta-data
+                android:name="androidx.car.app.minCarApiLevel"
+                android:value="1" />
         </service>
     </application>
 </manifest>

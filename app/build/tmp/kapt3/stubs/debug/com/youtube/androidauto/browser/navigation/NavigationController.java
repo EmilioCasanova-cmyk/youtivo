@@ -1,5 +1,8 @@
 package com.youtube.androidauto.browser.navigation;
 
+import android.webkit.WebView;
+import com.youtube.androidauto.browser.webview.WebViewManager;
+
 /**
  * Controlador de navegación web: atrás, adelante, recargar, inicio.
  */

@@ -5,20 +5,21 @@ package com.youtube.androidauto.browser.webview
  * la reproducción de video según el estado del vehículo.
  */
 object VideoControlScripts {
-    /** Pausa todos los videos y marca el vehículo como en movimiento. */
+    /** Pausa todos los videos y marca el vehículo como en movimiento. Usa un listener global. */
     const val PAUSE_ALL_VIDEOS = """
         (function() {
-            const videos = document.querySelectorAll('video');
-            videos.forEach(video => {
-                video.pause();
-                video.addEventListener('play', function handler(e) {
-                    if (window.vehicleIsMoving) {
-                        e.preventDefault();
-                        video.pause();
-                    }
-                }, { capture: true });
-            });
             window.vehicleIsMoving = true;
+            document.querySelectorAll('video').forEach(v => v.pause());
+            
+            if (!window.videoPauseListenerAdded) {
+                document.addEventListener('play', function(e) {
+                    if (window.vehicleIsMoving && e.target.tagName === 'VIDEO') {
+                        e.target.pause();
+                        console.log('Video pausado por seguridad (vehículo en movimiento)');
+                    }
+                }, true);
+                window.videoPauseListenerAdded = true;
+            }
         })();
     """
 
@@ -26,6 +27,7 @@ object VideoControlScripts {
     const val ALLOW_VIDEO_PLAYBACK = """
         (function() {
             window.vehicleIsMoving = false;
+            console.log('Video permitido (vehículo detenido)');
         })();
     """
 
@@ -35,10 +37,27 @@ object VideoControlScripts {
     /** Parche para forzar la reproducción automática cuando se navega. */
     const val AUTO_PLAY_PATCH = """
         (function() {
+            if (window.autoPlayPatchAdded) return;
+            window.autoPlayPatchAdded = true;
+            
             setInterval(() => {
-                const playButton = document.querySelector('.ytp-play-button[aria-label="Reproducir"]');
-                if (playButton && !window.vehicleIsMoving) {
-                    playButton.click();
+                if (window.vehicleIsMoving) return;
+                
+                const playButtons = [
+                    '.ytp-play-button[aria-label="Reproducir"]',
+                    '.ytp-large-play-button',
+                    'button.ytp-play-button'
+                ];
+                
+                for (const selector of playButtons) {
+                    const btn = document.querySelector(selector);
+                    if (btn && btn.offsetParent !== null && !btn.classList.contains('ytp-play-button-active')) {
+                        // Solo clic si no se está ya reproduciendo (heurística básica)
+                        if (btn.getAttribute('aria-label') === 'Reproducir' || btn.tagName === 'BUTTON') {
+                            btn.click();
+                            break;
+                        }
+                    }
                 }
             }, 2000);
         })();
@@ -47,10 +66,16 @@ object VideoControlScripts {
     /** Oculta elementos visuales molestos o anuncios conocidos. */
     const val CSS_AD_BLOCK = """
         (function() {
+            if (window.adBlockStylesAdded) return;
+            window.adBlockStylesAdded = true;
+            
             const style = document.createElement('style');
             style.innerHTML = `
-                .ad-container, .ad-div, .video-ads, .ytp-ad-progress-list { display: none !important; }
-                #masthead-ad, ytd-ad-slot-renderer { display: none !important; }
+                .ad-container, .ad-div, .video-ads, .ytp-ad-progress-list,
+                #masthead-ad, ytd-ad-slot-renderer, .ytd-in-feed-ad-layout-renderer,
+                .ytp-ad-overlay-container, .ytp-ad-message-container,
+                ytd-promoted-sparkles-web-renderer, ytd-display-ad-render,
+                #player-ads, .ytd-banner-promo-renderer { display: none !important; }
             `;
             document.head.appendChild(style);
         })();

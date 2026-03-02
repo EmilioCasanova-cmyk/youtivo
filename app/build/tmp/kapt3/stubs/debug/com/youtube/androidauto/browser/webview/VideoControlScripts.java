@@ -8,16 +8,16 @@ package com.youtube.androidauto.browser.webview;
 public final class VideoControlScripts {
     
     /**
-     * Pausa todos los videos y marca el vehículo como en movimiento.
+     * Pausa todos los videos y marca el vehículo como en movimiento. Usa un listener global.
      */
     @org.jetbrains.annotations.NotNull()
-    public static final java.lang.String PAUSE_ALL_VIDEOS = "\n        (function() {\n            const videos = document.querySelectorAll(\'video\');\n            videos.forEach(video => {\n                video.pause();\n                video.addEventListener(\'play\', function handler(e) {\n                    if (window.vehicleIsMoving) {\n                        e.preventDefault();\n                        video.pause();\n                    }\n                }, { capture: true });\n            });\n            window.vehicleIsMoving = true;\n        })();\n    ";
+    public static final java.lang.String PAUSE_ALL_VIDEOS = "\n        (function() {\n            window.vehicleIsMoving = true;\n            document.querySelectorAll(\'video\').forEach(v => v.pause());\n            \n            if (!window.videoPauseListenerAdded) {\n                document.addEventListener(\'play\', function(e) {\n                    if (window.vehicleIsMoving && e.target.tagName === \'VIDEO\') {\n                        e.target.pause();\n                        console.log(\'Video pausado por seguridad (veh\u00edculo en movimiento)\');\n                    }\n                }, true);\n                window.videoPauseListenerAdded = true;\n            }\n        })();\n    ";
     
     /**
      * Permite la reproducción de video (vehículo estacionado).
      */
     @org.jetbrains.annotations.NotNull()
-    public static final java.lang.String ALLOW_VIDEO_PLAYBACK = "\n        (function() {\n            window.vehicleIsMoving = false;\n        })();\n    ";
+    public static final java.lang.String ALLOW_VIDEO_PLAYBACK = "\n        (function() {\n            window.vehicleIsMoving = false;\n            console.log(\'Video permitido (veh\u00edculo detenido)\');\n        })();\n    ";
     
     /**
      * Pausa simple de todos los elementos video.
@@ -29,13 +29,13 @@ public final class VideoControlScripts {
      * Parche para forzar la reproducción automática cuando se navega.
      */
     @org.jetbrains.annotations.NotNull()
-    public static final java.lang.String AUTO_PLAY_PATCH = "\n        (function() {\n            setInterval(() => {\n                const playButton = document.querySelector(\'.ytp-play-button[aria-label=\"Reproducir\"]\');\n                if (playButton && !window.vehicleIsMoving) {\n                    playButton.click();\n                }\n            }, 2000);\n        })();\n    ";
+    public static final java.lang.String AUTO_PLAY_PATCH = "\n        (function() {\n            if (window.autoPlayPatchAdded) return;\n            window.autoPlayPatchAdded = true;\n            \n            setInterval(() => {\n                if (window.vehicleIsMoving) return;\n                \n                const playButtons = [\n                    \'.ytp-play-button[aria-label=\"Reproducir\"]\',\n                    \'.ytp-large-play-button\',\n                    \'button.ytp-play-button\'\n                ];\n                \n                for (const selector of playButtons) {\n                    const btn = document.querySelector(selector);\n                    if (btn && btn.offsetParent !== null && !btn.classList.contains(\'ytp-play-button-active\')) {\n                        // Solo clic si no se est\u00e1 ya reproduciendo (heur\u00edstica b\u00e1sica)\n                        if (btn.getAttribute(\'aria-label\') === \'Reproducir\' || btn.tagName === \'BUTTON\') {\n                            btn.click();\n                            break;\n                        }\n                    }\n                }\n            }, 2000);\n        })();\n    ";
     
     /**
      * Oculta elementos visuales molestos o anuncios conocidos.
      */
     @org.jetbrains.annotations.NotNull()
-    public static final java.lang.String CSS_AD_BLOCK = "\n        (function() {\n            const style = document.createElement(\'style\');\n            style.innerHTML = `\n                .ad-container, .ad-div, .video-ads, .ytp-ad-progress-list { display: none !important; }\n                #masthead-ad, ytd-ad-slot-renderer { display: none !important; }\n            `;\n            document.head.appendChild(style);\n        })();\n    ";
+    public static final java.lang.String CSS_AD_BLOCK = "\n        (function() {\n            if (window.adBlockStylesAdded) return;\n            window.adBlockStylesAdded = true;\n            \n            const style = document.createElement(\'style\');\n            style.innerHTML = `\n                .ad-container, .ad-div, .video-ads, .ytp-ad-progress-list,\n                #masthead-ad, ytd-ad-slot-renderer, .ytd-in-feed-ad-layout-renderer,\n                .ytp-ad-overlay-container, .ytp-ad-message-container,\n                ytd-promoted-sparkles-web-renderer, ytd-display-ad-render,\n                #player-ads, .ytd-banner-promo-renderer { display: none !important; }\n            `;\n            document.head.appendChild(style);\n        })();\n    ";
     @org.jetbrains.annotations.NotNull()
     public static final com.youtube.androidauto.browser.webview.VideoControlScripts INSTANCE = null;
     

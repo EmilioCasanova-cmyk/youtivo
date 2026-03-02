@@ -71,11 +71,14 @@ class WebViewManager(
             ) {
                 super.onPageFinished(view, url)
                 Timber.d("Page finished: %s", url)
-                
+
+                // Asegurar que el estado esté definido antes de inyectar otros scripts
+                evaluateJavascript("window.vehicleIsMoving = window.vehicleIsMoving || false;", null)
+
                 // Inyectar optimizaciones de UI y reproducción
                 evaluateJavascript(VideoControlScripts.AUTO_PLAY_PATCH, null)
                 evaluateJavascript(VideoControlScripts.CSS_AD_BLOCK, null)
-                
+
                 onPageLoaded?.invoke()
             }
 

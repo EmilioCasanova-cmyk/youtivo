@@ -1,5 +1,9 @@
 package com.youtube.androidauto.browser.safety;
 
+import com.youtube.androidauto.browser.vehicle.VehicleStateMonitor;
+import com.youtube.androidauto.browser.webview.WebViewManager;
+import timber.log.Timber;
+
 /**
  * Controlador de seguridad que sincroniza el estado del vehículo
  * con el bloqueo/desbloqueo de video en el WebView.

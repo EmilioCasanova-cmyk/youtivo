@@ -1,5 +1,7 @@
 package com.youtube.androidauto.browser.error;
 
+import android.webkit.WebViewClient;
+
 /**
  * Convierte códigos de error del WebView en mensajes para el usuario.
  */

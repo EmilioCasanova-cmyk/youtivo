@@ -1,5 +1,17 @@
 package com.youtube.androidauto.browser.webview;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
+import android.media.AudioManager;
+import android.util.AttributeSet;
+import android.webkit.CookieManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import timber.log.Timber;
+
 /**
  * Gestor del WebView configurado para YouTube y seguridad vial.
  * Habilita JavaScript, DOM storage, reproduce medios sin gesto,

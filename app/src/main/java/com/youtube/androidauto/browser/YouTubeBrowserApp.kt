@@ -8,15 +8,7 @@ import timber.log.Timber
 class YouTubeBrowserApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        val isDebug =
-            try {
-                val cls = Class.forName("$packageName.BuildConfig")
-                val field = cls.getField("DEBUG")
-                field.getBoolean(null)
-            } catch (t: Throwable) {
-                false
-            }
-        if (isDebug) {
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
     }
