@@ -4,7 +4,7 @@ Aplicación Android Auto que integra un navegador web para acceder a YouTube con
 
 ## Descarga
 
-[Descargar APK](release/youtivo-debug.apk)
+[Descargar APK][]
 
 
 ## Requisitos
@@ -50,3 +50,6 @@ En dispositivos con API &lt; 26 hay que añadir iconos en `res/mipmap-hdpi`, `mi
 ## Documento de arquitectura
 
 Basado en *Arquitectura_YouTube_AndroidAuto (1).md* (v2.0, 14 feb 2026).
+
+
+[Descargar APK]: release/youtivo-debug.apk
